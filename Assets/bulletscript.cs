@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bulletscript : MonoBehaviour
 {
-
+    public bool knockup;
     public int direction = 1;
     [SerializeField] float speed = 10f;
     [SerializeField] Sprite red;
@@ -43,6 +43,11 @@ public class bulletscript : MonoBehaviour
         {
             Debug.Log("hit");
             collision.gameObject.GetComponent<characterScriptplayer>().damaged();
+            if (knockup)
+            {
+                collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 100f);
+            }
+         
             doonce=true;
             Destroy(this.gameObject.transform.parent.gameObject);
         }

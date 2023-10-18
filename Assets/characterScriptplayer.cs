@@ -12,6 +12,7 @@ public class characterScriptplayer : MonoBehaviour
     bool isjumped = false;
     float yvelocity = 0;
     [SerializeField] private string firekey = "Fire1";
+    [SerializeField] private string skillkey = "Skill1";
 [SerializeField] private float jumpvelocity = 30f;
     public GameObject mybullet;
     float bulletcooltime;
@@ -20,6 +21,8 @@ public class characterScriptplayer : MonoBehaviour
     GameObject scoreUI;
     public bool canmove;
     bool doonced;
+    Vector3 firstpos;
+    bool skillused;
     
     
     // Start is called before the first frame update
@@ -28,6 +31,7 @@ public class characterScriptplayer : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         hitpoint = 100;
         scoreUI = GameObject.FindGameObjectWithTag("UI");
+        firstpos = this.transform.position;
     }
 
 
@@ -41,7 +45,8 @@ public class characterScriptplayer : MonoBehaviour
         if (canmove)
         {
             movement();
-            fireprogram();
+            skillpressed();
+            fireprogram(false);
             bulletcooltime -= Time.deltaTime;
         }
         
@@ -83,7 +88,7 @@ public class characterScriptplayer : MonoBehaviour
 
     }
 
-    void fireprogram()
+    void fireprogram(bool isskill)
     {
         float firekeypressed = Input.GetAxis(firekey);
         if (firekeypressed > 0&&bulletcooltime<=0)
@@ -103,6 +108,7 @@ public class characterScriptplayer : MonoBehaviour
             GameObject bulletchild = spawned.transform.GetChild(0).gameObject;
             bulletscript bs = bulletchild.GetComponent<bulletscript>();
             bs.team = playernum;
+            bs.knockup = isskill;
             
             bs.direction = mydirec;
 
@@ -110,6 +116,20 @@ public class characterScriptplayer : MonoBehaviour
         }
     }
 
+    void skillpressed()
+    {
+        float skillpress = Input.GetAxis(skillkey);
+        if (skillpress > 0)
+        {
+            skillused=true;
+            fireprogram(skillused);
+
+        }
+        else
+        {
+            skillused = false;
+        }
+    }
     bool iszimen()
     {
        
@@ -123,6 +143,10 @@ public class characterScriptplayer : MonoBehaviour
         if (collision.CompareTag("Tile"))
         {
             onground = true;
+        }
+        if (collision.CompareTag("Player") && skillused)
+        {
+            collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 100f);
         }
     }
 
@@ -148,5 +172,14 @@ public class characterScriptplayer : MonoBehaviour
     {
         hitpoint = 100;
         doonced = false;
+        transform.position = firstpos;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag=="Player" && skillused)
+        {
+        //    collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 100f);
+        }
     }
 }
