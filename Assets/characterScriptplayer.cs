@@ -18,6 +18,8 @@ public class characterScriptplayer : MonoBehaviour
     public int playernum = 0;
     bool onground;
     GameObject scoreUI;
+    public bool canmove;
+    bool doonced;
     
     
     // Start is called before the first frame update
@@ -33,13 +35,16 @@ public class characterScriptplayer : MonoBehaviour
     void Update()
     {
         yvelocity = rb.velocity.y;
-       
-    
+
+
+
+        if (canmove)
+        {
+            movement();
+            fireprogram();
+            bulletcooltime -= Time.deltaTime;
+        }
         
-       
-        movement();
-        fireprogram();
-        bulletcooltime -= Time.deltaTime;
     }
 
     void movement()
@@ -85,7 +90,7 @@ public class characterScriptplayer : MonoBehaviour
         {
             float  direc = (this.transform.localScale.x);
             int mydirec;
-            bulletcooltime = 0.2f;
+            bulletcooltime = 0.01f;
             if (direc > 0)
             {
                 mydirec = 1;
@@ -132,9 +137,16 @@ public class characterScriptplayer : MonoBehaviour
     public void damaged()
     {
         hitpoint -= 1;
-        if (hitpoint <= 0)
+        if (hitpoint <= 0&&!doonced)
         {
             scoreUI.GetComponent<scoremanager>().wingame(playernum);
+            doonced = true;
         }
+    }
+
+    public void resetstats()
+    {
+        hitpoint = 100;
+        doonced = false;
     }
 }

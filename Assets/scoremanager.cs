@@ -9,6 +9,8 @@ public class scoremanager : MonoBehaviour
     [SerializeField] Text p2tex;
     [SerializeField] Text win;
     GameObject[] players;
+    [SerializeField] GameObject sui;
+    public int round=1;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,13 +42,27 @@ public class scoremanager : MonoBehaviour
         switch (won)
         {
             case 0:
-                win.color = new Color(255, 0, 0);
+                win.color = new Color(0, 0, 255);
+                win.text=("Player" + 2 + " win!");
 
                 break;
             case 1:
              
-                win.color = new Color(00, 0, 255);
+                win.color = new Color(255, 0, 0);
+                win.text = ("Player" + 1 + " win!");
                 break;
         }
+        foreach(GameObject p in players)
+        {
+            p.GetComponent<characterScriptplayer>().canmove = false;
+           
+        }
+        Invoke("nextround", 2.5f);
+    }
+    void nextround()
+    {
+        round++;
+        Instantiate(sui);
+        win.enabled = false;
     }
 }

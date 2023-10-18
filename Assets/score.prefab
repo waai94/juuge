@@ -199,6 +199,7 @@ MonoBehaviour:
   p1tex: {fileID: 1144097642512757807}
   p2tex: {fileID: 4736183461739252490}
   win: {fileID: 6624206429042001740}
+  sui: {fileID: 3375332885737958311, guid: 5618be098870ffc40b82ea1dd50b868e, type: 3}
 --- !u!1 &6750978962104153073
 GameObject:
   m_ObjectHideFlags: 0
