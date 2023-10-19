@@ -11,6 +11,7 @@ public class bulletscript : MonoBehaviour
     [SerializeField] Sprite blue;
     public int team;
     bool doonce;
+    [SerializeField]GameObject effect;
 
     private Rigidbody2D rb = null;
     
@@ -35,17 +36,30 @@ public class bulletscript : MonoBehaviour
     void Update()
     {
         rb.velocity=new Vector2(speed * direction, 0);
+        if (knockup)
+        {
+            transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player")&&!doonce)
         {
-            Debug.Log("hit");
+        
             collision.gameObject.GetComponent<characterScriptplayer>().damaged();
             if (knockup)
             {
-                collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 100f);
+                Instantiate(effect,collision.transform.position,this.transform.rotation);
+                collision.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 50f);
+                for(int i=0; i<3; i++)
+                {
+                    collision.gameObject.GetComponent<characterScriptplayer>().damaged();
+                }
             }
          
             doonce=true;

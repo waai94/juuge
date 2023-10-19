@@ -23,6 +23,7 @@ public class characterScriptplayer : MonoBehaviour
     bool doonced;
     Vector3 firstpos;
     bool skillused;
+    float skillcooltime;
     
     
     // Start is called before the first frame update
@@ -48,6 +49,7 @@ public class characterScriptplayer : MonoBehaviour
             skillpressed();
             fireprogram(false);
             bulletcooltime -= Time.deltaTime;
+            skillcooltime -= Time.deltaTime;
         }
         
     }
@@ -91,11 +93,11 @@ public class characterScriptplayer : MonoBehaviour
     void fireprogram(bool isskill)
     {
         float firekeypressed = Input.GetAxis(firekey);
-        if (firekeypressed > 0&&bulletcooltime<=0)
+        if (firekeypressed > 0&&bulletcooltime<=0||isskill)
         {
             float  direc = (this.transform.localScale.x);
             int mydirec;
-            bulletcooltime = 0.01f;
+            bulletcooltime = 0.1f;
             if (direc > 0)
             {
                 mydirec = 1;
@@ -119,10 +121,13 @@ public class characterScriptplayer : MonoBehaviour
     void skillpressed()
     {
         float skillpress = Input.GetAxis(skillkey);
-        if (skillpress > 0)
+        Debug.Log(skillpress);
+        if (skillpress > 0&&skillcooltime<=0)
         {
             skillused=true;
+     
             fireprogram(skillused);
+            skillcooltime = 5f;
 
         }
         else

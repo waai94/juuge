@@ -136,10 +136,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e8fc4c7edc53a4aa555ecd7cc0ccb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockup: 0
   direction: 1
   speed: 10
   red: {fileID: 1865811740, guid: ca28657d32d1c21468d380184a6bb93a, type: 3}
   blue: {fileID: 97313563, guid: ca28657d32d1c21468d380184a6bb93a, type: 3}
+  team: 0
+  effect: {fileID: 2165721683553710017, guid: 44e146ddac960b74e8b5484803c60520, type: 3}
 --- !u!1 &6666536757919516637
 GameObject:
   m_ObjectHideFlags: 0

@@ -1641,6 +1641,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 452583877203306632, guid: 7ab5212e3cd99854e8bcd1af1692b95b,
         type: 3}
+      propertyPath: skillkey
+      value: Skill2
+      objectReference: {fileID: 0}
+    - target: {fileID: 452583877203306632, guid: 7ab5212e3cd99854e8bcd1af1692b95b,
+        type: 3}
       propertyPath: playernum
       value: 1
       objectReference: {fileID: 0}
